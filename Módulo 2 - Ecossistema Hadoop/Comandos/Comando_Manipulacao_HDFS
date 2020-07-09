@@ -1,0 +1,74 @@
+******************************************************************************************************************************
+--Author: Maurício Marcos
+--Data: 31/05/2020
+
+--Comandos de manupulação do HDFS Hadoop:
+******************************************************************************************************************************
+
+-Remover os diretórios em: /usr/local/hadoop/tmp: 
+	/usr/local/hadoop/tmp: sudo rm -r dfs
+	/usr/local/hadoop/tmp: sudo rm -r nm-local-dir
+
+-Formatação do sistema de arquivo HDFS: dentro do diretório da instalação /usr/local/hadoop executar bin/hdfs namenode -format
+
+-Comando jps: verifica quais aplicativos JAVA estão em execução no momento.
+
+-Scripts de inicialização do Hadoop: 
+	/usr/local/hadoop/sbin
+		
+--Scripts de inicialização do Hadoop: /usr/local/hadoop		
+	-Inicializando: a partir do diretório hadoop: sbin/start-all.sh (start-all.sh é o nome do arquivo que contém o script)
+
+-Criar diretório <igti> no HFDS: /usr/local/hadoop$ bin/hdfs dfs -mkdir /igti 
+
+-Consultar diretório criado: /usr/local/hadoop$ bin/hdfs dfs -ls /igti
+
+-Comando para inserir um arquivo no HDFS: /usr/local/hadoop$ bin/hdfs dfs -put /usr/local/hadoop/Dados/covidData.txt /igti/ecossistema
+
+-Visualizar o conteúdo do arquivo criado: bin/hdfs dfs -cat /igti/ecossistema/covidData.txt
+
+-Remover o arquivo covidData.txt do HDFS: /usr/local/hadoop$ bin/hdfs dfs -rmr /igti/ecossistema/covidData.txt
+
+-Remover o subdiretório ecossistema: bin/hdfs dfs -rmr /igti/ecossistema
+
+-Encerrando serviços do hadoop: /usr/local/hadoop$ sbin/stop-all.sh
+
+******************************************************************************************************************************
+
+Comando para compilação: a partir do diretório onde está localizado o arquivo build_exemploIGTI.xml
+/usr/local/hadoop/ExemploIGTI$ ant -f build_ExemploIGTI.xml makejar Buildfile: /usr/local/hadoop/ExemploIGTI/build_ExemploIGTI.xml
+
+Comando para executar o .JAR a partir do HADOOP: a partir do diretório hadoop
+/usr/local/hadoop$ bin/hadoop jar /usr/local/hadoop/ExemploIGTI/ExemploIGTI.jar IGTI.ExemploIGTI
+
+********************************************************************************************************************************
+
+Comandos do SQOOP
+
+--Carregar dados de uma tabela de banco de dados (exemplo mysql) para dentro do HDFS: /usr/local/sqoop$ bin/sqoop import --connect jdbc:mysql://localhost/IGTI?zeroDateTimeBehavior=convert_To_null --username root --password igti --table CLIENTE_VENDA -m 1 --bindir /usr/local/sqoop/lib --target-dir /igti
+
+*****************************************************************************************************************************
+
+Comandos HIVE
+
+--Iniciar o hive: /usr/local/hive$  /usr/local/hive/bin/hive
+
+-Criação de uma tabela para importação de dados do hdfs (separado por vírgula conforme arquivo que está no HDFS): create table CLIENTE_VENDA (ID INT, NOME STRING, QTDE_ITENS INT, TOTAL_VENDAS FLOAT, LIMITE_CREDITO FLOAT, ESTADO STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' STORED AS TEXTFILE LOCATION '/HIVE/firsDB/cliente_Venda'; 
+
+-Carregar dados do HDFS para dentro da tabela CLIENTE_VENDAS criada no HIVE: LOAD DATA INPATH 'hdfs://localhost:54310/igti/part-m-00000' INTO TABLE CLIENTE_VENDA;
+
+--Criação da tabela para o desafio: create table DadosCovid (dataOcorrencia String, siglaPais String, descPais String, regiao String, novosCasos int, casosAcumulados int, novosObitos int, obitosAcumulados int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' STORED AS TEXTFILE LOCATION '/Desafio/dadosCovid.txt'; 
+
+carregar os dados: LOAD DATA INPATH 'hdfs://localhost:54310/igti/covidData' INTO TABLE DadosCovid;
+
+
+
+
+
+
+
+
+
+
+
+

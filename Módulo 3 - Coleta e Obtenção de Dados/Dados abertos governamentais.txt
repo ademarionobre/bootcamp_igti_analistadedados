@@ -1,0 +1,6 @@
+Conhecemos alguns portais de dados abertos governamentais, como por exemplo:
+
+Portal Brasileiro de Dados Abertos (http://www.dados.gov.br/ (Links para um site externo.)).
+Portal da Transparência (http://www.portaldatransparencia.gov.br/ (Links para um site externo.))
+Portal de Dados Abertos Dataprev (http://dadosabertos.dataprev.gov.br/ (Links para um site externo.)).
+Portal de Dados e APIs do IBGE: https://servicodados.ibge.gov.br/api/docs
